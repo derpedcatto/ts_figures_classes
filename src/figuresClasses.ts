@@ -1,13 +1,13 @@
 enum Shapes {
-  triangle = 'triangle',
-  circle = 'circle',
-  rectangle = 'rectangle',
+  Triangle = 'triangle',
+  Circle = 'circle',
+  Rectangle = 'rectangle',
 }
 
 enum Colors {
-  red = 'red',
-  green = 'green',
-  blue = 'blue',
+  Red = 'red',
+  Green = 'green',
+  Blue = 'blue',
 }
 
 export interface Figure {
@@ -18,7 +18,7 @@ export interface Figure {
 }
 
 export class Triangle implements Figure {
-  public shape: Shapes = Shapes.triangle;
+  public shape: Shapes = Shapes.Triangle;
 
   constructor(
     public color: Colors,
@@ -26,14 +26,20 @@ export class Triangle implements Figure {
     public b: number,
     public c: number,
   ) {
-    if (a <= 0 || b <= 0 || c <= 0) {
-      throw new Error('All sides must be positive numbers');
+    if (a <= 0) {
+      throw new Error(`Side 'a' must be greater than 0, got ${a}`);
+    }
+
+    if (b <= 0) {
+      throw new Error(`Side 'b' must be greater than 0, got ${b}`);
+    }
+
+    if (c <= 0) {
+      throw new Error(`Side 'c' must be greater than 0, got ${c}`);
     }
 
     if (a + b <= c || a + c <= b || b + c <= a) {
-      throw new Error(
-        'Invalid triangle: sides do not satisfy triangle inequality',
-      );
+      throw new Error(`The sides ${a}, ${b}, ${c} cannot form a triangle.`);
     }
   }
 
@@ -46,14 +52,14 @@ export class Triangle implements Figure {
 }
 
 export class Circle implements Figure {
-  public shape: Shapes = Shapes.circle;
+  public shape: Shapes = Shapes.Circle;
 
   constructor(
     public color: Colors,
     public radius: number,
   ) {
     if (radius <= 0) {
-      throw new Error('Radius must be a positive number');
+      throw new Error(`Radius must be greater than 0, got ${radius}`);
     }
   }
 
@@ -65,20 +71,26 @@ export class Circle implements Figure {
 }
 
 export class Rectangle implements Figure {
-  public shape: Shapes = Shapes.rectangle;
+  public shape: Shapes = Shapes.Rectangle;
 
   constructor(
     public color: Colors,
     public width: number,
     public height: number,
   ) {
-    if (width <= 0 || height <= 0) {
-      throw new Error('Width and height must be positive numbers');
+    if (width <= 0) {
+      throw new Error(`Width must be greater than 0, got ${width}`);
+    }
+
+    if (height <= 0) {
+      throw new Error(`Height must be greater than 0, got ${height}`);
     }
   }
 
   getArea(): number {
-    return this.height * this.width;
+    const area = this.height * this.width;
+
+    return Math.floor(area * 100) / 100;
   }
 }
 
